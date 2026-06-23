@@ -1,8 +1,9 @@
 namespace EcommerceDev.Core.Entities;
 
-public class OrderProductReview : BaseEntity
+public class OrderItemReview : BaseEntity
 {
-    public OrderProductReview(Guid idOrderItem, Guid idCustomer, string title, string description, int score)
+    protected OrderItemReview() { }
+    public OrderItemReview(Guid idOrderItem, Guid idCustomer, string title, string description, int score)
     {
         IdOrderItem = idOrderItem;
         IdCustomer = idCustomer;

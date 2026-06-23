@@ -2,6 +2,7 @@ namespace EcommerceDev.Core.Entities;
 
 public class Customer : BaseEntity
 {
+    protected Customer() { }
     public Customer(string fullName, string email, string phoneNumber, DateTime birthDate, string document)
     {
         FullName = fullName;
@@ -19,4 +20,6 @@ public class Customer : BaseEntity
     public DateTime BirthDate { get; set; }
     public string Document { get; set; }
     public List<CustomerAddress> Addresses { get; set; }
+    public List<Order> Orders { get; set; }
+    public List<OrderItemReview> Reviews { get; set; }
 }

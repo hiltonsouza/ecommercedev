@@ -2,6 +2,7 @@ namespace EcommerceDev.Core.Entities;
 
 public class CustomerAddress : BaseEntity
 {
+    protected CustomerAddress() { }
     public CustomerAddress(Guid idCustomer, string addressLine1, string? addressLine2, string zipCode, string district, string state, string city, string country, string recipientName)
     {
         IdCustomer = idCustomer;

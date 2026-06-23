@@ -2,6 +2,7 @@ namespace EcommerceDev.Core.Entities;
 
 public class OrderUpdate : BaseEntity
 {
+    protected OrderUpdate() { }
     public OrderUpdate(Guid idOrder, string description)
     {
         IdOrder = idOrder;

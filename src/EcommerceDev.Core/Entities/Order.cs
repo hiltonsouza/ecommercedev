@@ -4,12 +4,11 @@ namespace EcommerceDev.Core.Entities;
 
 public class Order : BaseEntity
 {
-    public Order(Guid idCustomer, DateTime? confirmationDate, DateTime? shippingDate, OrderStatus status, Guid deliveryAddressId, decimal shippingPrice, decimal totalProductsPrice, List<OrderItem> items)
+    protected Order() { }
+    public Order(Guid idCustomer, Guid deliveryAddressId, decimal shippingPrice, decimal totalProductsPrice, List<OrderItem> items)
     {
         IdCustomer = idCustomer;
-        ConfirmationDate = confirmationDate;
-        ShippingDate = shippingDate;
-        Status = status;
+        Status = OrderStatus.Created;
         DeliveryAddressId = deliveryAddressId;
         ShippingPrice = shippingPrice;
         TotalProductsPrice = totalProductsPrice;
@@ -18,6 +17,7 @@ public class Order : BaseEntity
         Updates = [];
     }
     public Guid IdCustomer { get; set; }
+    public Customer Customer { get; set; }
     public DateTime? ConfirmationDate { get; set; }
     public DateTime? ShippingDate { get; set; }
     public OrderStatus Status { get; set; }

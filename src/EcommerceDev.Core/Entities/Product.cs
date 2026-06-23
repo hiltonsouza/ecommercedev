@@ -2,14 +2,14 @@ namespace EcommerceDev.Core.Entities;
 
 public class Product : BaseEntity
 {
-    public Product(string title, string description, decimal price, string brand, int quantity, ProductCategory category, Guid idCategory)
+    protected Product() { }
+    public Product(string title, string description, decimal price, string brand, int quantity, Guid idCategory)
     {
         Title = title;
         Description = description;
         Price = price;
         Brand = brand;
         Quantity = quantity;
-        Category = category;
         IdCategory = idCategory;
     }
 
@@ -20,5 +20,6 @@ public class Product : BaseEntity
     public int Quantity { get; set; }
     public Guid IdCategory { get; set; }
     public ProductCategory Category { get; set; }
-    
+    public List<OrderItemReview> Reviews { get; set; } = [];
+    public List<ProductImage> Images { get; set; } = [];
 }
