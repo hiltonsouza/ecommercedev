@@ -1,6 +1,19 @@
-@EcommerceDev.API_HostAddress = http://localhost:5088
+@EcommerceDev_API_HostAddress = http://localhost:5088
+@productId = 
+@categoryId = 
+@customerId =
 
-GET {{EcommerceDev.API_HostAddress}}/weatherforecast/
+GET {{EcommerceDev_API_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+POST {{EcommerceDev_API_HostAddress}}/api/customers
+Content-Type: application/json
+
+{
+  "fullName": "Luis Felipe",
+  "email": "luis@email.com",
+  "phone": "1234567890",
+  "birthDate": "1997-12-06",
+  "document": "12345678900"
+}
