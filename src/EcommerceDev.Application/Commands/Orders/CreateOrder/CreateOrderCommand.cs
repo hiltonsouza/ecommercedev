@@ -8,6 +8,6 @@ public class CreateOrderCommand
 
 public class CreateOrderCommandItem
 {
-    Guid IdProduct { get; set; }
+    public Guid IdProduct { get; set; }
     public int Quantity { get; set; }
 }
