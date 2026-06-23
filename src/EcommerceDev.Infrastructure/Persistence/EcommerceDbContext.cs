@@ -1,0 +1,110 @@
+using EcommerceDev.Core.Entities;
+using Microsoft.EntityFrameworkCore;
+
+namespace EcommerceDev.Infrastructure.Persistence;
+
+public class EcommerceDbContext : DbContext
+{
+    public EcommerceDbContext(DbContextOptions<EcommerceDbContext> options) : base(options)
+    { }
+    
+    public DbSet<Customer> Customers { get; set; }
+    public DbSet<CustomerAddress> CustomerAddresses { get; set; }
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
+    public DbSet<OrderItemReview> OrderProductReviews { get; set; }
+    public DbSet<OrderUpdate> OrderUpdates { get; set; }
+    public DbSet<Product> Products { get; set; }
+    public DbSet<ProductCategory> ProductCategories { get; set; }
+    public DbSet<ProductImage> ProductImages { get; set; }
+    
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        builder.Entity<Customer>(e =>
+        {
+            e.HasKey(c => c.Id);
+            
+            e.HasMany(c => c.Addresses)
+                .WithOne()
+                .HasForeignKey(a => a.IdCustomer)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            e.HasMany(c => c.Orders)
+                .WithOne(o => o.Customer)
+                .HasForeignKey(o => o.IdCustomer)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            e.HasMany(c => c.Reviews)
+                .WithOne(r => r.Customer)
+                .HasForeignKey(r => r.IdCustomer)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+        builder.Entity<CustomerAddress>(e =>
+        {
+            e.HasKey(c => c.Id);
+        });
+        builder.Entity<Order>(e =>
+        {
+            e.HasKey(c => c.Id);
+            
+            e.HasMany(o => o.Items)
+                .WithOne()
+                .HasForeignKey(i => i.IdOrder)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            e.HasMany(o => o.Updates)
+                .WithOne()
+                .HasForeignKey(u => u.IdOrder)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+        builder.Entity<OrderItem>(e =>
+        {
+            e.HasKey(c => c.Id);
+            
+            e.HasOne(oi => oi.Review)
+                .WithOne(opr => opr.OrderItem)
+                .HasForeignKey<OrderItemReview>(opr => opr.IdOrderItem)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            e.HasOne(oi => oi.Product)
+                .WithMany()
+                .HasForeignKey(oi => oi.IdProduct)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+        builder.Entity<OrderItemReview>(e =>
+        {
+            e.HasKey(c => c.Id);
+            
+        });
+        builder.Entity<OrderUpdate>(e =>
+        {
+            e.HasKey(c => c.Id);
+        });
+        builder.Entity<Product>(e =>
+        {
+            e.HasKey(c => c.Id);
+            
+            e.HasMany(p => p.Images)
+                .WithOne()
+                .HasForeignKey(i => i.IdProduct)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+        
+        builder.Entity<ProductCategory>(e =>
+        {
+            e.HasKey(c => c.Id);
+            
+            e.HasMany(pc => pc.Products)
+                .WithOne(p => p.Category)
+                .HasForeignKey(p => p.IdCategory)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+        builder.Entity<ProductImage>(e =>
+        {
+            e.HasKey(c => c.Id);
+        });
+        
+        base.OnModelCreating(builder);
+    }   
+    
+}
